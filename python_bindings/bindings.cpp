@@ -189,6 +189,17 @@ class Index {
     }
 
 
+    void reset_statistics() {
+      if (appr_alg)
+          appr_alg->reset_statistics();
+    }
+
+    void print_statistics() const {
+        if (appr_alg) {
+            appr_alg->print_statistics();
+        }
+    }
+
     void init_new_index(
         size_t maxElements,
         size_t M,
@@ -950,6 +961,8 @@ PYBIND11_PLUGIN(hnswlib) {
         .def("resize_index", &Index<float>::resizeIndex, py::arg("new_size"))
         .def("get_max_elements", &Index<float>::getMaxElements)
         .def("get_current_count", &Index<float>::getCurrentCount)
+        .def("print_statistics", &Index<float>::print_statistics)
+        .def("reset_statistics", &Index<float>::reset_statistics)
         .def_readonly("space", &Index<float>::space_name)
         .def_readonly("dim", &Index<float>::dim)
         .def_readwrite("num_threads", &Index<float>::num_threads_default)
